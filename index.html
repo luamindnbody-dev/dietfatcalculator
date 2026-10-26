@@ -1,342 +1,259 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>루아코치의 종합 다이어트 한계 계산기</title>
-    <style>
-        @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
-        
-        body { 
-            font-family: 'Pretendard', sans-serif; 
-            background-color: #f4f1eb; 
-            color: #333; 
-            padding: 20px; 
-            display: flex; 
-            justify-content: center; 
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
-        }
-        .container { 
-            background: #ffffff; 
-            padding: 35px 30px; 
-            border-radius: 16px; 
-            box-shadow: 0 8px 20px rgba(0,0,0,0.05); 
-            max-width: 480px; 
-            width: 100%; 
-        }
-        h2 { 
-            font-size: 1.3rem; 
-            color: #2c3e50; 
-            text-align: center; 
-            margin-top: 0;
-            margin-bottom: 25px;
-            font-weight: 700;
-        }
-        .section-title {
-            font-size: 1.05rem;
-            color: #638076;
-            margin-top: 20px;
-            margin-bottom: 15px;
-            font-weight: 700;
-            border-bottom: 2px solid #e1e8e5;
-            padding-bottom: 8px;
-        }
-        .input-group {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 12px;
-        }
-        .input-group label {
-            font-weight: 600; 
-            font-size: 0.95rem; 
-            color: #555;
-            width: 45%;
-        }
-        .input-group input[type="number"], .input-group select {
-            width: 50%;
-            padding: 10px; 
-            border: 1px solid #ddd; 
-            border-radius: 8px; 
-            font-size: 0.95rem;
-            transition: border-color 0.3s;
-        }
-        .input-group input:focus, .input-group select:focus {
-            outline: none;
-            border-color: #638076;
-        }
-        .radio-group {
-            margin-bottom: 12px;
-            font-size: 0.95rem;
-        }
-        .radio-item {
-            display: flex;
-            align-items: center;
-            margin-bottom: 6px;
-            color: #444;
-            cursor: pointer;
-        }
-        .radio-item input {
-            margin-right: 8px;
-            accent-color: #638076;
-        }
-        button { 
-            width: 100%; 
-            padding: 14px; 
-            margin-top: 25px; 
-            background-color: #638076; 
-            color: white; 
-            border: none; 
-            border-radius: 8px; 
-            cursor: pointer; 
-            font-size: 1.05rem; 
-            font-weight: bold;
-            transition: background-color 0.3s;
-        }
-        button:hover {
-            background-color: #4f665e;
-        }
-        .result { 
-            margin-top: 25px; 
-            padding: 20px; 
-            background-color: #f7f9f8; 
-            border-radius: 8px; 
-            border: 1px solid #e1e8e5;
-        }
-        .result-row {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 10px;
-            font-size: 0.95rem;
-            color: #444;
-        }
-        .comparison-box {
-            margin-top: 20px;
-        }
-        .theory-box {
-            padding: 15px;
-            background-color: #f0f0f0;
-            border-radius: 8px;
-            color: #666;
-            text-align: center;
-        }
-        .theory-box span {
-            display: block;
-            font-size: 1.25rem;
-            font-weight: 700;
-            margin-top: 5px;
-            color: #888;
-        }
-        .safe-box {
-            margin-top: 15px;
-            padding: 20px;
-            background-color: #eaf1ee;
-            border-radius: 8px;
-            border: 1px solid #c9e0d6;
-            text-align: center;
-        }
-        .safe-box span.kcal {
-            display: block;
-            font-size: 1.6rem;
-            font-weight: 800;
-            color: #3b534a;
-            margin-top: 5px;
-        }
-        .coach-tip {
-            margin-top: 20px;
-            padding: 18px;
-            background-color: #fff9e6;
-            border-left: 4px solid #f1c40f;
-            border-radius: 4px;
-            font-size: 0.95rem;
-            color: #555;
-            line-height: 1.6;
-        }
-        .coach-tip b {
-            color: #d35400;
-        }
-        .note { 
-            font-size: 0.8rem; 
-            color: #888; 
-            margin-top: 20px; 
-            line-height: 1.5; 
-            background-color: #fafafa;
-            padding: 15px;
-            border-radius: 8px;
-            text-align: left;
-        }
-        /* 배너 스타일 */
-        .banner-link {
-            text-decoration: none;
-            display: block;
-            margin-top: 20px;
-        }
-        .banner-placeholder {
-            padding: 15px;
-            background-color: #2c3e50;
-            color: white;
-            text-align: center;
-            border-radius: 8px;
-            font-weight: bold;
-            font-size: 0.95rem;
-            transition: background-color 0.3s;
-        }
-        .banner-placeholder:hover {
-            background-color: #1a252f;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>루아코치의 체지방률별 다이어트 속도 계산기</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;800&display=swap">
+<style>
+:root{
+  --bg:#EEF3F1; --surface:#FFFFFF; --ink:#16302B; --muted:#5B6F6A; --line:#D3DFDB;
+  --brand:#1F7A68; --brand-soft:#DDEFEA;
+  --z0:#7FB7D9; --z1:#5FB08F; --z2:#E0A43A; --z3:#D7664A;
+  --warn-bg:#FFF4E5; --warn-ink:#7A4A06;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#101917; --surface:#18241F; --ink:#E6EFEC; --muted:#9DB2AC; --line:#2C3D38;
+    --brand:#58C2A9; --brand-soft:#1E3A33;
+    --warn-bg:#3A2A12; --warn-ink:#F3C987;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#101917; --surface:#18241F; --ink:#E6EFEC; --muted:#9DB2AC; --line:#2C3D38;
+  --brand:#58C2A9; --brand-soft:#1E3A33; --warn-bg:#3A2A12; --warn-ink:#F3C987;
+}
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);background:var(--bg)}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+html{color-scheme:light dark}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font-family:"Pretendard","Noto Sans KR","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;line-height:1.6}
+main{max-width:560px;margin:0 auto;padding:28px 18px 60px}
+h1{font-size:1.7rem;line-height:1.3;margin:0 0 6px;font-weight:800;letter-spacing:-0.02em}
+.lead{color:var(--muted);margin:0 0 24px;font-size:.95rem}
+section{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:20px;margin-bottom:14px}
+h2{font-size:1.05rem;margin:0 0 14px;font-weight:700}
+.sex{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px}
+.sex input{position:absolute;opacity:0}
+.sex label{display:block;text-align:center;padding:11px;border:1.5px solid var(--line);border-radius:10px;cursor:pointer;font-weight:600}
+.sex input:checked + label{border-color:var(--brand);background:var(--brand-soft);color:var(--brand)}
+.sex input:focus-visible + label{outline:2px solid var(--brand);outline-offset:2px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.field label{display:block;font-size:.85rem;color:var(--muted);margin-bottom:4px}
+input[type=number],select{width:100%;padding:11px 12px;border:1.5px solid var(--line);border-radius:10px;
+  font:inherit;font-size:1rem;background:var(--surface);color:var(--ink)}
+input:focus,select:focus{outline:none;border-color:var(--brand)}
+button{width:100%;margin-top:6px;padding:15px;border:0;border-radius:12px;background:var(--brand);color:#fff;
+  font:inherit;font-size:1.05rem;font-weight:700;cursor:pointer}
+button:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
+.error{color:var(--z3);font-size:.9rem;margin:10px 0 0;min-height:1em}
+#result{display:none}
+/* speed gauge */
+.verdict{font-size:1.35rem;font-weight:800;margin:0 0 4px;letter-spacing:-0.02em}
+.verdict small{display:block;font-size:.9rem;font-weight:500;color:var(--muted);letter-spacing:0}
+.gauge{position:relative;margin:26px 0 8px}
+.track{display:flex;height:14px;border-radius:7px;overflow:hidden}
+.track div{height:100%}
+.marker{position:absolute;top:-22px;transform:translateX(-50%);text-align:center;font-size:.8rem;font-weight:700;transition:left .5s ease}
+.marker::after{content:"";display:block;width:2px;height:24px;background:var(--ink);margin:2px auto 0}
+.zones{display:flex;font-size:.72rem;color:var(--muted);margin-top:6px}
+.zones span{text-align:center}
+.big{display:flex;align-items:baseline;gap:6px;margin:18px 0 2px}
+.big b{font-size:2.4rem;font-weight:800;color:var(--brand);letter-spacing:-0.03em}
+.rows{margin:14px 0 0;padding:0;list-style:none}
+.rows li{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-top:1px solid var(--line);font-size:.95rem}
+.rows li span:first-child{color:var(--muted)}
+.rows li span:last-child{font-weight:700;text-align:right}
+.split{display:flex;height:34px;border-radius:8px;overflow:hidden;margin:12px 0 6px;font-size:.8rem;font-weight:700;color:#fff}
+.split div{display:flex;align-items:center;justify-content:center;white-space:nowrap;overflow:hidden}
+.note{background:var(--warn-bg);color:var(--warn-ink);border-radius:10px;padding:12px 14px;font-size:.88rem;margin-top:14px}
+.refs{font-size:.8rem;color:var(--muted)}
+.refs p{margin:0 0 8px}
+a.cta{display:block;text-align:center;padding:14px;border:1.5px solid var(--brand);border-radius:12px;color:var(--brand);
+  font-weight:700;text-decoration:none;margin-top:6px}
+@media (prefers-reduced-motion: reduce){.marker{transition:none}}
+</style>
 </head>
 <body>
-    <div class="container">
-        <h2>🔥 루아코치의 종합 다이어트 한계 계산기</h2>
-        
-        <div class="section-title">1. 신체 프로필 입력</div>
-        <div class="radio-group">
-            <label class="radio-item"><input type="radio" name="gender" value="female" checked> 여성</label>
-            <label class="radio-item"><input type="radio" name="gender" value="male"> 남성</label>
-        </div>
-        
-        <div class="input-group">
-            <label for="age">만 나이 (세)</label>
-            <input type="number" id="age">
-        </div>
-        <div class="input-group">
-            <label for="height">신장 (cm)</label>
-            <input type="number" id="height">
-        </div>
-        <div class="input-group">
-            <label for="weight">현재 체중 (kg)</label>
-            <input type="number" id="weight" step="0.1">
-        </div>
-        <div class="input-group">
-            <label for="bodyfat">체지방률 (%)</label>
-            <input type="number" id="bodyfat" step="0.1">
-        </div>
+<main>
+  <h1>내 몸에 맞는 감량 속도 계산기</h1>
+  <p class="lead">체지방률과 성별에 따라 근육을 지키면서 뺄 수 있는 주간 감량 속도와 하루 적자 칼로리를 알려드려요.</p>
 
-        <div class="section-title">2. 활동량 선택</div>
-        <div class="input-group" style="display:block;">
-            <select id="activity" style="width:100%;">
-                <option value="1.2">거의 운동하지 않음 (사무직 등)</option>
-                <option value="1.375">가벼운 활동 (주 1~3회 운동)</option>
-                <option value="1.55" selected>보통 활동 (주 3~5회 운동)</option>
-                <option value="1.725">적극적인 활동 (주 6~7회 강도 높은 운동)</option>
-                <option value="1.9">매우 적극적인 활동 (전문 운동선수, 육체노동)</option>
-            </select>
-        </div>
-
-        <button onclick="calculateAll()">분석 결과 확인하기</button>
-
-        <div class="result" id="result-box" style="display:none;">
-            <div class="result-row">
-                <span>제지방량 (LBM)</span>
-                <strong id="res-lbm"></strong>
-            </div>
-            <div class="result-row">
-                <span>기초대사량 (BMR)</span>
-                <strong id="res-bmr"></strong>
-            </div>
-            <div class="result-row" style="border-bottom: 1px dashed #ccc; padding-bottom: 10px;">
-                <span>하루 총 소모 칼로리 (TDEE)</span>
-                <strong id="res-tdee" style="color: #638076;"></strong>
-            </div>
-
-            <div class="comparison-box">
-                <div class="theory-box">
-                    <div style="font-size: 0.9rem; font-weight: 600;">⚠️ 하루 최대 적자 칼로리 (이론적 한계 범위)</div>
-                    <span id="max-deficit-theory"></span>
-                    <div style="font-size: 0.85rem; margin-top: 5px;">현재 체지방량: <b id="fat-mass-theory"></b>kg 기준</div>
-                </div>
-
-                <div class="safe-box">
-                    <div style="font-size: 1.05rem; font-weight: 700; color: #2c3e50;">✅ 루아코치 권장 안전 결손 칼로리</div>
-                    <div style="font-size: 0.85rem; margin-top: 5px; color: #666;">수분 손실 및 대사 적응을 고려한 실무 마지노선</div>
-                    <span id="max-deficit-safe" class="kcal"></span>
-                    <div style="font-size: 0.9rem; margin-top: 10px; color: #3b534a;">
-                        하루 활동 칼로리에서 이 칼로리 제한 시<br>한 달에 <b>약 <span id="safe-monthly-loss"></span>kg</b> 감소 예정
-                    </div>
-                </div>
-            </div>
-
-            <div class="coach-tip">
-                💡 <b>루아코치의 다이어트 솔루션</b><br><br>
-                건강한 체형 변화를 위해서는 무작정 굶는 것이 아니라, <b>'식단으로 줄이는 칼로리'를 하루 총 소모 칼로리(TDEE)의 20% 이내인 <span id="diet-limit" style="font-weight:bold; font-size:1.1rem; text-decoration:underline;"></span></b>로 제한해야 합니다.<br><br>
-                그 이상의 칼로리 결손이 필요하다면, 반드시 <b>활동량(운동)을 늘려서</b> 나머지를 채워주세요!
-            </div>
-            
-            <div class="note">
-                <b>* 대사량 계산 근거</b><br>
-                일반적인 통계 기반의 미플린(Mifflin) 공식과 근육량(제지방량) 기반의 캐치-맥아들(Katch-McArdle) 공식을 모두 계산하여 대사량의 오차 범위를 나타냈습니다.<br><br>
-                <b>* 체지방 연소 한계 근거</b><br>
-                - 논문(Alpert, 2005) 기준 체지방 1kg당 평균 249 ± 25 kJ (약 53.5 ~ 65.5 kcal) 에너지 동원 가능.<br>
-                - 루아코치 권장 수치(48.5 kcal/kg)는 이 이론적 최대치를 실제 다이어트 현장에 맞춰 보수적으로 하향 조정한 기준입니다.
-            </div>
-        </div>
-
-        <!-- 하단 배너 영역 (처음부터 항상 보임) -->
-        <a href="https://luamindnbody-dev.github.io/macrocalculator/" target="_blank" class="banner-link">
-            <div class="banner-placeholder">
-                👉 내 몸에 딱 맞는 맞춤형 탄단지 계산하러 가기
-            </div>
-        </a>
+  <section>
+    <h2>신체 정보</h2>
+    <div class="sex">
+      <div><input type="radio" name="sex" id="f" value="f" checked><label for="f">여성</label></div>
+      <div><input type="radio" name="sex" id="m" value="m"><label for="m">남성</label></div>
     </div>
+    <div class="grid">
+      <div class="field"><label for="age">만 나이 (세)</label><input type="number" id="age" inputmode="numeric" placeholder="예: 30"></div>
+      <div class="field"><label for="height">신장 (cm)</label><input type="number" id="height" inputmode="decimal" placeholder="예: 163"></div>
+      <div class="field"><label for="weight">현재 체중 (kg)</label><input type="number" id="weight" inputmode="decimal" placeholder="예: 60"></div>
+      <div class="field"><label for="bf">체지방률 (%)</label><input type="number" id="bf" inputmode="decimal" placeholder="예: 30"></div>
+    </div>
+    <div class="field" style="margin-top:12px">
+      <label for="act">활동량</label>
+      <select id="act">
+        <option value="1.2">거의 운동하지 않음 (사무직 등)</option>
+        <option value="1.375" selected>가벼운 활동 (주 1~3회 운동)</option>
+        <option value="1.55">보통 활동 (주 3~5회 운동)</option>
+        <option value="1.725">적극적인 활동 (주 6~7회 고강도)</option>
+        <option value="1.9">매우 적극적인 활동 (선수, 육체노동)</option>
+      </select>
+    </div>
+    <p class="error" id="err" role="alert"></p>
+    <button id="calc">내 감량 속도 계산하기</button>
+  </section>
 
-    <script>
-        function calculateAll() {
-            const age = parseFloat(document.getElementById('age').value);
-            const height = parseFloat(document.getElementById('height').value);
-            const weight = parseFloat(document.getElementById('weight').value);
-            const bodyfat = parseFloat(document.getElementById('bodyfat').value);
-            const activity = parseFloat(document.getElementById('activity').value);
-            const gender = document.querySelector('input[name="gender"]:checked').value;
+  <div id="result" aria-live="polite">
+    <section>
+      <h2>내 체지방 구간</h2>
+      <p class="verdict" id="zoneName"></p>
+      <div class="gauge">
+        <div class="marker" id="marker"></div>
+        <div class="track" id="track"></div>
+        <div class="zones" id="zoneLabels"></div>
+      </div>
+      <div class="big"><b id="weeklyKg"></b><span>kg / 주</span></div>
+      <p class="lead" style="margin:0" id="weeklyPct"></p>
+      <ul class="rows">
+        <li><span>한 달 예상 감량</span><span id="monthKg"></span></li>
+        <li><span>필요한 하루 적자 칼로리</span><span id="deficit"></span></li>
+      </ul>
+    </section>
 
-            if(isNaN(age) || isNaN(height) || isNaN(weight) || isNaN(bodyfat)) {
-                alert("프로필 및 신체 정보를 모두 정확히 입력해주세요.");
-                return;
-            }
+    <section>
+      <h2>적자를 어떻게 만들까</h2>
+      <ul class="rows" style="margin-top:0">
+        <li><span>하루 총 소모 칼로리 (TDEE)</span><span id="tdee"></span></li>
+        <li><span>권장 섭취 칼로리</span><span id="intake"></span></li>
+      </ul>
+      <div class="split" id="split"></div>
+      <p class="refs" style="margin:0">식단으로 줄이는 양은 TDEE의 20% 이내로, 나머지는 운동으로 채우세요.</p>
+      <div class="note" id="note"></div>
+    </section>
 
-            const fatMass = weight * (bodyfat / 100);
-            const leanBodyMass = weight - fatMass;
+    <section>
+      <h2>세부 수치</h2>
+      <ul class="rows" style="margin-top:0">
+        <li><span>체지방량</span><span id="fm"></span></li>
+        <li><span>제지방량 (LBM)</span><span id="lbm"></span></li>
+        <li><span>기초대사량 (BMR)</span><span id="bmr"></span></li>
+        <li><span>체지방 동원 이론적 한계</span><span id="limitMax"></span></li>
+        <li><span>루아코치 권장 적자 상한</span><span id="limitCoach"></span></li>
+      </ul>
+    </section>
 
-            let bmrMifflin = (10 * weight) + (6.25 * height) - (5 * age);
-            if(gender === 'male') {
-                bmrMifflin += 5;
-            } else {
-                bmrMifflin -= 161;
-            }
+    <section class="refs">
+      <h2 style="color:var(--ink)">계산 근거</h2>
+      <p>주간 감량 속도: 근육 보존을 위해 주당 체중의 0.5~1% 감량을 권고한 Helms, Aragon &amp; Fitschen (2014, JISSN)과 주당 0.7% vs 1.4% 감량을 비교한 Garthe 등 (2011)을 바탕으로, 체지방이 높을수록 빠르게·낮을수록 천천히 가도록 성별 체지방 구간을 나눴습니다. 체중과 관계없이 주 1kg을 넘지 않게 제한합니다.</p>
+      <p>대사량: Mifflin-St Jeor 공식과 제지방량 기반 Katch-McArdle 공식의 평균을 사용합니다.</p>
+      <p>체지방 연소 한계: Alpert (2005) 기준 체지방 1kg당 하루 약 53.5~65.5 kcal 동원 가능. 루아코치 권장치(48.5 kcal/kg)는 이를 실무에 맞게 보수적으로 낮춘 값입니다.</p>
+      <p>지방 1kg ≈ 7,700 kcal로 환산했으며, 첫 1~2주는 수분 손실로 계산보다 더 빠지는 게 정상입니다.</p>
+    </section>
 
-            const bmrKatch = 370 + (21.6 * leanBodyMass);
-            const bmrMin = Math.min(bmrMifflin, bmrKatch);
-            const bmrMax = Math.max(bmrMifflin, bmrKatch);
+    <a class="cta" href="https://luamindnbody-dev.github.io/macrocalculator/">맞춤형 탄단지 계산하러 가기</a>
+  </div>
+</main>
 
-            const tdeeMin = bmrMin * activity;
-            const tdeeMax = bmrMax * activity;
-            
-            const theoryDeficitLower = fatMass * 53.5;
-            const theoryDeficitUpper = fatMass * 65.5;
-            
-            const safeDeficit = fatMass * 48.5;
-            const safeMonthlyLoss = (safeDeficit * 30) / 7700;
+<script>
+const ZONES = {
+  m: { min:5, max:40, cuts:[12,20,25], labels:["~12%","13~19%","20~25%","25%~"] },
+  f: { min:10, max:50, cuts:[20,28,35], labels:["~20%","21~27%","28~34%","35%~"] }
+};
+const ZONE_INFO = [
+  { name:"낮은 체지방", rate:[0.25,0.5], color:"var(--z0)", desc:"이미 마른 편이라 천천히 가야 근육이 덜 빠져요." },
+  { name:"보통 체지방", rate:[0.5,0.75], color:"var(--z1)", desc:"근육을 지키며 꾸준히 빼기 좋은 구간이에요." },
+  { name:"높은 체지방", rate:[0.75,1.0], color:"var(--z2)", desc:"조금 더 빠른 속도로 진행해도 괜찮은 구간이에요." },
+  { name:"매우 높은 체지방", rate:[1.0,1.0], color:"var(--z3)", desc:"주당 약 1%, 최대 주 1kg까지 가능한 구간이에요." }
+];
+const KCAL_PER_KG = 7700;
+const $ = id => document.getElementById(id);
+const fmt = (n, d=0) => n.toLocaleString("ko-KR", {minimumFractionDigits:d, maximumFractionDigits:d});
 
-            const dietLimitMin = tdeeMin * 0.20;
-            const dietLimitMax = tdeeMax * 0.20;
+function zoneIndex(sex, bf){
+  const [a,b,c] = ZONES[sex].cuts;
+  if (sex === "m") return bf <= a ? 0 : bf < b ? 1 : bf <= c ? 2 : 3;
+  return bf <= a ? 0 : bf < b ? 1 : bf < c ? 2 : 3;
+}
 
-            document.getElementById('res-lbm').innerText = leanBodyMass.toFixed(1) + " kg";
-            
-            document.getElementById('res-bmr').innerText = Math.round(bmrMin) + " ~ " + Math.round(bmrMax) + " kcal";
-            document.getElementById('res-tdee').innerText = Math.round(tdeeMin) + " ~ " + Math.round(tdeeMax) + " kcal";
-            
-            document.getElementById('fat-mass-theory').innerText = fatMass.toFixed(1);
-            
-            document.getElementById('max-deficit-theory').innerText = Math.round(theoryDeficitLower) + " ~ " + Math.round(theoryDeficitUpper) + " kcal";
-            document.getElementById('max-deficit-safe').innerText = Math.round(safeDeficit) + " kcal";
-            document.getElementById('safe-monthly-loss').innerText = safeMonthlyLoss.toFixed(1);
-            
-            document.getElementById('diet-limit').innerText = "약 " + Math.round(dietLimitMin) + " ~ " + Math.round(dietLimitMax) + " kcal";
-            
-            document.getElementById('result-box').style.display = "block";
-        }
-    </script>
+$("calc").addEventListener("click", () => {
+  const sex = document.querySelector('input[name="sex"]:checked').value;
+  const age = +$("age").value, h = +$("height").value, w = +$("weight").value, bf = +$("bf").value;
+  const act = +$("act").value;
+
+  if (!age || !h || !w || !bf) { $("err").textContent = "네 칸을 모두 숫자로 입력해 주세요."; return; }
+  if (bf < 3 || bf > 65) { $("err").textContent = "체지방률은 3~65% 사이로 입력해 주세요."; return; }
+  if (w < 30 || w > 250 || h < 120 || h > 230 || age < 15 || age > 90) { $("err").textContent = "나이·신장·체중이 일반적인 범위를 벗어났어요. 다시 확인해 주세요."; return; }
+  $("err").textContent = "";
+
+  const fm = w * bf / 100, lbm = w - fm;
+  const mifflin = 10*w + 6.25*h - 5*age + (sex === "m" ? 5 : -161);
+  const katch = 370 + 21.6*lbm;
+  const bmr = (mifflin + katch) / 2;
+  const tdee = bmr * act;
+
+  const zi = zoneIndex(sex, bf), z = ZONE_INFO[zi];
+  let kgLo = w * z.rate[0] / 100, kgHi = Math.min(w * z.rate[1] / 100, 1.0);
+  if (kgLo > kgHi) kgLo = kgHi;
+
+  const defLo = kgLo * KCAL_PER_KG / 7, defHiRaw = kgHi * KCAL_PER_KG / 7;
+  const coachLimit = fm * 48.5;
+  const defHi = Math.min(defHiRaw, coachLimit);
+  const defLoC = Math.min(defLo, defHi);
+  const defMid = (defLoC + defHi) / 2;
+
+  const foodCap = tdee * 0.2;
+  const food = Math.min(defMid, foodCap);
+  const exercise = Math.max(defMid - food, 0);
+
+  // verdict
+  $("zoneName").innerHTML = `${z.name}<small>${z.desc}</small>`;
+  $("weeklyKg").textContent = kgLo === kgHi ? fmt(kgHi,2) : `${fmt(kgLo,2)}~${fmt(kgHi,2)}`;
+  const pctTxt = z.rate[0] === z.rate[1] ? `${z.rate[0]}%` : `${z.rate[0]}~${z.rate[1]}%`;
+  $("weeklyPct").textContent = `체중의 주당 ${pctTxt}${kgHi >= 1.0 && w * z.rate[1]/100 > 1 ? " (주 1kg 상한 적용)" : ""}`;
+  $("monthKg").textContent = `약 ${fmt(kgLo*4.3,1)}~${fmt(kgHi*4.3,1)} kg`;
+  $("deficit").textContent = `${fmt(defLoC)}~${fmt(defHi)} kcal`;
+
+  // gauge
+  const Z = ZONES[sex], span = Z.max - Z.min;
+  const edges = [Z.min, ...Z.cuts, Z.max];
+  $("track").innerHTML = ZONE_INFO.map((zz,i) =>
+    `<div style="width:${(edges[i+1]-edges[i])/span*100}%;background:${zz.color}"></div>`).join("");
+  $("zoneLabels").innerHTML = Z.labels.map((l,i) =>
+    `<span style="width:${(edges[i+1]-edges[i])/span*100}%">${l}</span>`).join("");
+  const pos = Math.min(Math.max((bf - Z.min)/span*100, 2), 98);
+  $("marker").textContent = `${fmt(bf,1)}%`;
+  $("marker").style.left = pos + "%";
+
+  // split
+  $("tdee").textContent = `${fmt(tdee)} kcal`;
+  $("intake").textContent = `${fmt(tdee - food)} kcal`;
+  const fp = defMid ? food/defMid*100 : 100;
+  $("split").innerHTML =
+    `<div style="width:${fp}%;background:var(--brand)">식단 −${fmt(food)}</div>` +
+    (exercise > 0 ? `<div style="width:${100-fp}%;background:var(--z2)">운동 −${fmt(exercise)}</div>` : "");
+
+  let notes = [];
+  if (defHiRaw > coachLimit) notes.push(`현재 체지방량 기준으로 하루 적자는 ${fmt(coachLimit)} kcal를 넘기지 않는 게 좋아서 상한을 낮췄어요.`);
+  if (exercise > 0) notes.push(`식단만으로 맞추면 TDEE의 20%를 넘으니, 하루 약 ${fmt(exercise)} kcal는 운동으로 채워 주세요.`);
+  else notes.push("식단 조절만으로도 목표 속도를 낼 수 있어요. 근력운동은 근육 보존을 위해 꼭 함께 하세요.");
+  if (tdee - food < bmr) notes.push("권장 섭취량이 기초대사량보다 낮아요. 섭취를 더 줄이기보다 활동량을 늘리는 쪽을 추천해요.");
+  $("note").innerHTML = notes.join("<br>");
+
+  // details
+  $("fm").textContent = `${fmt(fm,1)} kg`;
+  $("lbm").textContent = `${fmt(lbm,1)} kg`;
+  $("bmr").textContent = `${fmt(Math.min(mifflin,katch))}~${fmt(Math.max(mifflin,katch))} kcal`;
+  $("limitMax").textContent = `${fmt(fm*53.5)}~${fmt(fm*65.5)} kcal`;
+  $("limitCoach").textContent = `${fmt(coachLimit)} kcal`;
+
+  $("result").style.display = "block";
+  $("result").scrollIntoView({behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth"});
+});
+</script>
 </body>
 </html>
